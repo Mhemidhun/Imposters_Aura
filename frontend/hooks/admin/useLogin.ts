@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginFormValues, loginSchema } from "@/schemas/admin/login";
+import { loginAPI } from "@/services/admin/api";
 
 export const useLogin = ()=>{
 
@@ -12,7 +13,13 @@ export const useLogin = ()=>{
 
       const onSubmit = async (data: LoginFormValues) => {
         console.log("Logging in with", data);
-        await new Promise((resolve) => setTimeout(resolve, 1500));
+        try {
+          const res = await loginAPI(data)
+          console.log('res',res)
+        } catch (error) {
+          console.log(error)
+        }
+        // await new Promise((resolve) => setTimeout(resolve, 1500));
         alert("Login successful!");
       };
       
