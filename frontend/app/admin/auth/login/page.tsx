@@ -22,7 +22,7 @@ export default function Login() {
 
         <h2 className="mt-4 text-center text-2xl font-semibold text-gray-800">Sign in to your account</h2>
         <p className="mt-1 text-center text-sm text-gray-500">
-          Don’t have an account? <a href="#" className="text-green-600 hover:underline">Get started</a>
+          Don’t have an account?? <a href="#" className="text-green-600 hover:underline">Get started</a>
         </p>
 
         <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-4">
