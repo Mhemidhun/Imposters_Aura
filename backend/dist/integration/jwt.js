@@ -12,40 +12,45 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const user_model_1 = require("../../models/user.model");
-const base_repository_1 = __importDefault(require("../base.repository"));
-class UserAuthRepository extends base_repository_1.default {
-    constructor() {
-        super({
-            User: user_model_1.UserModel
-        });
-    }
-    userSignup(data) {
+exports.JwtService = void 0;
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const constant_1 = require("../utils/constant");
+class JwtService {
+    createToken(user, role) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const addUser = yield this.createData('User', data);
-                return addUser;
+                const syncToken = yield jsonwebtoken_1.default.sign({ user, role }, String(constant_1.JWT_SECRET), { expiresIn: '2m' });
+                return syncToken;
             }
             catch (error) {
-                throw error;
+                console.log(error.message);
             }
         });
     }
-    userLogin(email, password) {
+    createRefreshToken(user, role) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const loginUser = yield this.findOne('User', { email });
-                if (!loginUser) {
-                    const error = new Error('Invalid Credentials');
-                    error.name = 'InvalidCredentials';
-                    throw error;
-                }
-                return loginUser;
+                const syncToken = yield jsonwebtoken_1.default.sign({ user, role }, String(constant_1.JWT_SECRET), { expiresIn: '2m' });
+                return syncToken;
             }
             catch (error) {
-                throw error;
+                console.log(error.message);
+            }
+        });
+    }
+    //Expiration verifyToken
+    isTokenExpired(token) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const decodedToken = jsonwebtoken_1.default.decode(token);
+                const currentTime = Math.floor(Date.now() / 1000);
+                return decodedToken.exp < currentTime;
+            }
+            catch (error) {
+                console.log("Error in access token expiry Check :", error);
+                throw new Error("user not authorised");
             }
         });
     }
 }
-exports.default = UserAuthRepository;
+exports.JwtService = JwtService;
