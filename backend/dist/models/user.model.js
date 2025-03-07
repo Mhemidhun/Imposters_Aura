@@ -40,6 +40,7 @@ const UserSchema = new mongoose_1.Schema({
     email: { type: String, required: true },
     phone: { type: Number, required: true },
     password: { type: String, required: true },
+    role: { type: String, required: true, default: 'Student' },
     isBlocked: { type: Boolean, required: true, default: false },
     isVerfied: { type: Boolean, required: true, default: false },
 }, { timestamps: true });

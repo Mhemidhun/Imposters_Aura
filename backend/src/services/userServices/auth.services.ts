@@ -22,6 +22,21 @@ export default class UserAuthServices implements IUserAuthServicesMethods {
             throw error
         }
     }
+
+    async userLogin(email: string, password: string): Promise<IUser> {
+        try{
+            const loginUser = await this.userAuthRepository.userLogin(email, password)
+            const isPassword = await bcrypt.compare(password, loginUser.password)
+            if(!isPassword){
+                const error = new Error('Invalid Credentials')
+                error.name = 'InvalidCredentials'
+                throw error
+            }
+            return loginUser
+        }catch(error: unknown){
+            throw error
+        }
+    }
 }
 
 const userAuthRepository = new UserAuthRepository()
