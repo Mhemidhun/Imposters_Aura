@@ -32,6 +32,23 @@ class UserAuthServices {
             }
         });
     }
+    userLogin(email, password) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const loginUser = yield this.userAuthRepository.userLogin(email, password);
+                const isPassword = yield bcrypt_1.default.compare(password, loginUser.password);
+                if (!isPassword) {
+                    const error = new Error('Invalid Credentials');
+                    error.name = 'InvalidCredentials';
+                    throw error;
+                }
+                return loginUser;
+            }
+            catch (error) {
+                throw error;
+            }
+        });
+    }
 }
 exports.default = UserAuthServices;
 const userAuthRepository = new auth_repository_1.default();
