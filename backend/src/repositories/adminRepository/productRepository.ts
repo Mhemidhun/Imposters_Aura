@@ -23,6 +23,13 @@ export default class ProductRepository extends BaseRepository<{
 
     async addProduct(data: productInput): Promise<IProducts> {
         try {
+
+            // Check if category already exists
+            const productExists = await this.findOne("Product", { productName: data.productName });
+            if (productExists) {
+                throw new Error("Product already exists. Try Edit ..!!");
+            }
+
             const newData: any = {
                 productName: data.productName,
                 categoryId: new mongoose.Types.ObjectId(data.categoryId),

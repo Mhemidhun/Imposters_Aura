@@ -1,34 +1,35 @@
-import mongoose, { model, Schema, Document } from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
 
-interface IImages {
-    url: string;
+// Enum for Subcategories
+export enum SubCategoryEnum {
+    OVERSIZED = "oversized",
+    JAGGY = "jaggy",
 }
 
-export interface IProducts extends Document {
-    productName: string;
-    categoryId: Schema.Types.ObjectId;
-    productPrice: number;
-    productColour: string;
-    productSize: string;
-    productDescription: string;
-    productImages: IImages[];
+// Category Interface
+export interface ICategory extends Document {
+    categoryName: string;
+    description: string;
+    subCategories: SubCategoryEnum[];
     isBlocked: boolean;
+    isDeleted: boolean;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
-const productSchema = new Schema<IProducts>(
+const CategorySchema = new Schema<ICategory>(
     {
-        productName: { type: String, required: true },
-        categoryId: { type: Schema.Types.ObjectId, required: true, ref: 'Category' },
-        productPrice: { type: Number, required: true },
-        productColour: { type: String, required: true },
-        productSize: { type: String, required: true },
-        productDescription: { type: String, required: true },
-        productImages: [{ url: { type: String, required: true } }],
-        isBlocked: { type: Boolean, required: true, default: false }
+        categoryName: { type: String, required: true, unique: true },
+        description: { type: String, required: true },
+        subCategories: {
+            type: [String],
+            enum: Object.values(SubCategoryEnum),
+            required: true,
+        },
+        isBlocked: { type: Boolean, default: false }, // Block/Unblock status
+        isDeleted: { type: Boolean, default: false }, // Block/Unblock status
     },
-    {
-        timestamps: true
-    }
+    { timestamps: true } // Automatically adds createdAt & updatedAt fields
 );
 
-export const ProductModel = model<IProducts>('products', productSchema);
+export const CategoryModel = mongoose.model<ICategory>("Category", CategorySchema);
