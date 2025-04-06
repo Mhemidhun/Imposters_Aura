@@ -22,7 +22,7 @@ export const handleAxiosError = (error: any) => {
 };
 
 export const axiosInstance = axios.create({
-    baseURL : `http:localhost:4000/api/admin-service`,
+    baseURL : `https://imposters-aura-6tmw.onrender.com/api/admin-service`,
     headers : {
         "Content-Type" : "application/json"
     },

@@ -1,12 +1,17 @@
-
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { SubCategoryEnum } from "@/types/admin";
 
-// Zod schema for validation
-const categorySchema = z.object({
-  name: z.string().min(3, "Category name must be at least 3 characters"),
-  description: z.string().min(10, "Description must be at least 10 characters"),
-  image: z.any(), // Accepts a file instead of a URL
+
+
+export const categorySchema = z.object({
+  categoryName: z.string().trim().min(1, "Category name is required"),
+  description: z.string().trim().min(5, "Description should be at least 5 characters"),
+  subCategories: z
+    .array(z.nativeEnum(SubCategoryEnum), {
+      required_error: "At least one subcategory must be selected",
+    })
+    .min(1, "Select at least one subcategory"),
 });
 
-type CategoryFormValues = z.infer<typeof categorySchema>;
+
+export type CategoryFormValues = z.infer<typeof categorySchema>;

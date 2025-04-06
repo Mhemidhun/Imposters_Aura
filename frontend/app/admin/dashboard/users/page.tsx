@@ -1,15 +1,8 @@
 "use client"
 import { useState } from "react";
 import { Pencil, Trash2, Ban, CheckCircle } from "lucide-react";
+import {User}from "../../../../types/admin"
 
-interface User {
-  id: number;
-  username: string;
-  email: string;
-  phone: number;
-  password: string;
-  isBlocked: boolean;
-}
 
 const usersData: User[] = [
   { id: 1, username: "John Doe", email: "john@example.com", phone: 9876543210, password: "****", isBlocked: false },

@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { Pencil, Trash2 } from "lucide-react";
-import AddCategoryPage from "@/components/admin/dashboard/category/add-category";
+import AddCategoryPage from "@/components/admin/dashboard/category/AddCategory";
 import { categoryTableHead } from "@/constants/admin";
+import SearchBar from "@/components/common/SearchBar";
 
 interface Category {
   id: number;
@@ -59,13 +60,7 @@ export default function CategoryPage() {
       <div className="menu bg-[#182237] p-4 rounded-lg max-w-5xl mx-auto">
         {/* Top Section (Search & Add Category) */}
         <div className="flex flex-col sm:flex-row justify-between items-center mb-4 space-y-3 sm:space-y-0">
-          <input
-            type="text"
-            placeholder="Search category..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full sm:w-1/3 px-3 py-2 rounded-md bg-[#1f2a40] text-white placeholder-gray-400 border-none focus:ring-2 focus:ring-blue-500"
-          />
+          <SearchBar search={search} setSearch={setSearch}/>
           <button
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md w-full sm:w-auto"
             onClick={() => setIsAddCategory((prev) => !prev)}
@@ -136,8 +131,11 @@ export default function CategoryPage() {
             </div>
           ))}
         </div>
+        {
+          isAddCategory &&<AddCategoryPage onClose={()=>setIsAddCategory(false)}/>
+        }
 
-        {/* Pagination */}
+        {/* Pagination */}  
         {totalPages > 1 && (
           <div className="flex flex-col sm:flex-row justify-between items-center mt-4 space-y-3 sm:space-y-0">
             <span className="text-white">Page {currentPage} of {totalPages}</span>
