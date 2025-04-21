@@ -22,7 +22,11 @@ export const handleAxiosError = (error: any) => {
 };
 
 export const axiosInstance = axios.create({
+<<<<<<< Updated upstream
+    baseURL : `https://imposters-aura-6tmw.onrender.com/api/admin-service`,
+=======
     baseURL : `http:localhost:4000/api/admin-service`,
+>>>>>>> Stashed changes
     headers : {
         "Content-Type" : "application/json"
     },
