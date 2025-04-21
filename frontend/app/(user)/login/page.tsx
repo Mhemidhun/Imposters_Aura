@@ -35,11 +35,11 @@ export default function LoginPage() {
 
   const onSubmit = (data: LoginFormInputs) => {
     console.log('Login data:', data);
-    router.replace('/'); // Redirect after login
+    router.replace('/');
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen pt-[100px]">
       {/* Left Side - Image */}
       <div className="hidden md:flex w-1/2 h-full relative">
         <Image

@@ -13,14 +13,14 @@ const slides = [
 
 const HeroSection = () => {
   return (
-    <div className="w-full h-[80vh] relative">
+    <div className="w-full h-[80vh] relative pt-[100px]">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={50}
         slidesPerView={1}
         navigation
         pagination={{ clickable: true }}
-        autoplay={{ delay: 5000 }}
+        autoplay={{ delay: 8000 }}
         className="w-full h-full"
       >
         {slides.map((slide) => (
